@@ -31,9 +31,9 @@ static const CLLocationDegrees DefaultLongitude = 2.339004;
     
     self.calloutView = [[SMCalloutView alloc] init];
     UIButton *button = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-    [button    addTarget:self
-                  action:@selector(calloutAccessoryButtonTapped:)
-        forControlEvents:UIControlEventTouchUpInside];
+    [button addTarget:self
+               action:@selector(calloutAccessoryButtonTapped:)
+     forControlEvents:UIControlEventTouchUpInside];
     self.calloutView.rightAccessoryView = button;
     
 	
@@ -74,21 +74,31 @@ static const CLLocationDegrees DefaultLongitude = 2.339004;
     NSArray *markers = @[
         @{
             @"title": @"Eiffel Tower",
+            @"info": @"A wrought-iron structure erected in Paris in 1889. With a height of 984 feet (300 m), it was the tallest man-made structure for many years.",
             @"latitude": @48.8584,
             @"longitude": @2.2946
         },
         @{
-            @"title": @"La Louvre",
+            @"title": @"Centre Georges Pompidou",
+            @"info": @"Centre Georges Pompidou is a complex in the Beaubourg area of the 4th arrondissement of Paris. It was designed in the style of high-tech architecture.",
+            @"latitude": @48.8607,
+            @"longitude": @2.3524
+        },
+        @{
+            @"title": @"The Louvre",
+            @"info": @"The principal museum and art gallery of France, in Paris.",
             @"latitude": @48.8609,
             @"longitude": @2.3363
         },
         @{
             @"title": @"Arc de Triomphe",
+            @"info": @"A ceremonial arch standing at the top of the Champs Élysées in Paris.",
             @"latitude": @48.8738,
             @"longitude": @2.2950
         },
         @{
-            @"title": @"Notre Dame de Paris",
+            @"title": @"Notre Dame",
+            @"info": @"A Gothic cathedral in Paris, dedicated to the Virgin Mary, built between 1163 and 1250.",
             @"latitude": @48.8530,
             @"longitude": @2.3498
         }
@@ -102,6 +112,7 @@ static const CLLocationDegrees DefaultLongitude = 2.339004;
         options.position = CLLocationCoordinate2DMake([marker[@"latitude"] doubleValue], [marker[@"longitude"] doubleValue]);
         options.title = marker[@"title"];
         options.icon = pinImage;
+        options.userData = marker;
         
         options.infoWindowAnchor = CGPointMake(0.5, 0.25);
         options.groundAnchor = CGPointMake(0.5, 1.0);
@@ -114,9 +125,11 @@ static const CLLocationDegrees DefaultLongitude = 2.339004;
 - (void)calloutAccessoryButtonTapped:(id)sender {
     if (self.mapView.selectedMarker) {
         
-        NSString *message = [NSString stringWithFormat:@"Show info for %@", self.mapView.selectedMarker.title];
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Info"
-                                                            message:message
+        id<GMSMarker> marker = self.mapView.selectedMarker;
+        NSDictionary *userData = marker.userData;
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:userData[@"title"]
+                                                            message:userData[@"info"]
                                                            delegate:nil
                                                   cancelButtonTitle:@"OK"
                                                   otherButtonTitles:nil];
@@ -142,10 +155,10 @@ static const CLLocationDegrees DefaultLongitude = 2.339004;
     calloutRect.size = CGSizeZero;
     
     [self.calloutView presentCalloutFromRect:calloutRect
-                                 inView:mapView
-                      constrainedToView:mapView
-               permittedArrowDirections:SMCalloutArrowDirectionDown
-                               animated:YES];
+                                      inView:mapView
+                           constrainedToView:mapView
+                    permittedArrowDirections:SMCalloutArrowDirectionDown
+                                    animated:YES];
     
     return self.emptyCalloutView;
 }
