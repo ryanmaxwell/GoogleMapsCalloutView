@@ -1,4 +1,9 @@
 GoogleMapsCalloutView
 =====================
 
-An example of integrating SMCalloutView bubbles with Google Maps iOS SDK
+An example of integrating [SMCalloutView](https://github.com/nfarina/calloutview) bubbles with the [Google Maps iOS SDK](https://developers.google.com/maps/documentation/ios/)
+
+![Screenshot](https://raw.github.com/ryanmaxwell/GoogleMapsCalloutView/master/LouvreScreenshot.png)
+
+## Building Project
+Install Cocoapods. `cd` into directory and `pod install`. Open `GoogleMapsCalloutViewDemo.xcworkspace`. 
