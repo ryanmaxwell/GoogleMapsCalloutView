@@ -10,7 +10,7 @@
 #import <GoogleMaps/GoogleMaps.h>
 #import <SMCalloutView/SMCalloutView.h>
 
-static const CGFloat CalloutYOffset = 45.0f;
+static const CGFloat CalloutYOffset = 50.0f;
 
 static const CGFloat DefaultZoom = 12.0f;
 
