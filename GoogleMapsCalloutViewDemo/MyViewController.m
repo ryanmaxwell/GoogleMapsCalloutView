@@ -12,11 +12,10 @@
 
 static const CGFloat CalloutYOffset = 50.0f;
 
-static const CGFloat DefaultZoom = 12.0f;
-
 /* Paris */
 static const CLLocationDegrees DefaultLatitude = 48.856132;
 static const CLLocationDegrees DefaultLongitude = 2.339004;
+static const CGFloat DefaultZoom = 12.0f;
 
 @interface MyViewController () <GMSMapViewDelegate>
 @property (strong, nonatomic) GMSMapView *mapView;
@@ -36,11 +35,12 @@ static const CLLocationDegrees DefaultLongitude = 2.339004;
      forControlEvents:UIControlEventTouchUpInside];
     self.calloutView.rightAccessoryView = button;
     
-	
-    GMSCamera camera = GMSCameraMake(DefaultLatitude, DefaultLongitude, DefaultZoom);
+	GMSCameraPosition *cameraPosition = [GMSCameraPosition cameraWithLatitude:DefaultLatitude
+                                                                    longitude:DefaultLongitude
+                                                                         zoom:DefaultZoom];
     
     self.mapView = [GMSMapView mapWithFrame:self.view.bounds
-                                     camera:camera];
+                                     camera:cameraPosition];
     self.mapView.delegate = self;
     
     self.mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
@@ -163,19 +163,19 @@ static const CLLocationDegrees DefaultLongitude = 2.339004;
     return self.emptyCalloutView;
 }
 
-- (void)mapView:(GMSMapView *)pMapView didChangeCameraPosition:(GMSCamera)position {
+- (void)mapView:(GMSMapView *)pMapView didChangeCameraPosition:(GMSCameraPosition *)position {
     /* move callout with map drag */
     if (pMapView.selectedMarker != nil && !self.calloutView.hidden) {
         CLLocationCoordinate2D anchor = [pMapView.selectedMarker position];
         
         CGPoint pt = [pMapView.projection pointForCoordinate:anchor];
         
-        /* objectAtIndex:3 is the bottomAnchor ImageView, aka the triangle. */
+        // objectAtIndex:3 is the bottomAnchor ImageView, aka the triangle.
         UIImageView *iv = (self.calloutView.subviews)[3];
         CGFloat widthadjust = iv.frame.size.width / 2;
         CGFloat cx = iv.frame.origin.x + widthadjust;
         pt.x -= cx;
-        pt.y -= iv.frame.size.height - 11 + CalloutYOffset;
+        pt.y -= iv.frame.size.height - 10 + CalloutYOffset;
         self.calloutView.frame = (CGRect) {.origin = pt, .size = self.calloutView.frame.size };
     } else {
         self.calloutView.hidden = YES;
