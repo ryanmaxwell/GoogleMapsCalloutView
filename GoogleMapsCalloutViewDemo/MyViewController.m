@@ -168,14 +168,12 @@ static const CGFloat DefaultZoom = 12.0f;
     if (pMapView.selectedMarker != nil && !self.calloutView.hidden) {
         CLLocationCoordinate2D anchor = [pMapView.selectedMarker position];
         
-        CGPoint pt = [pMapView.projection pointForCoordinate:anchor];
+        CGPoint arrowPt = self.calloutView.backgroundView.arrowPoint;
         
-        // objectAtIndex:3 is the bottomAnchor ImageView, aka the triangle.
-        UIImageView *iv = (self.calloutView.subviews)[3];
-        CGFloat widthadjust = iv.frame.size.width / 2;
-        CGFloat cx = iv.frame.origin.x + widthadjust;
-        pt.x -= cx;
-        pt.y -= iv.frame.size.height - 10 + CalloutYOffset;
+        CGPoint pt = [pMapView.projection pointForCoordinate:anchor];
+        pt.x -= arrowPt.x;
+        pt.y -= arrowPt.y + CalloutYOffset;
+        
         self.calloutView.frame = (CGRect) {.origin = pt, .size = self.calloutView.frame.size };
     } else {
         self.calloutView.hidden = YES;
