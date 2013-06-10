@@ -6,4 +6,4 @@ An example of integrating [SMCalloutView](https://github.com/nfarina/calloutview
 ![Screenshot](https://raw.github.com/ryanmaxwell/GoogleMapsCalloutView/master/LouvreScreenshot.png)
 
 ## Building Project
-Install Cocoapods. `cd` into directory and `pod install`. Open `GoogleMapsCalloutViewDemo.xcworkspace`. 
+Install [Cocoapods](http://cocoapods.org). `cd` into directory and `pod install`. Open `GoogleMapsCalloutViewDemo.xcworkspace`. 
