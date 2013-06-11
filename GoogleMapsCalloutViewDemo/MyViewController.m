@@ -10,6 +10,11 @@
 #import <GoogleMaps/GoogleMaps.h>
 #import <SMCalloutView/SMCalloutView.h>
 
+static NSString * const TitleKey = @"title";
+static NSString * const InfoKey = @"info";
+static NSString * const LatitudeKey = @"latitude";
+static NSString * const LongitudeKey = @"longitude";
+
 static const CGFloat CalloutYOffset = 50.0f;
 
 /* Paris */
@@ -73,34 +78,34 @@ static const CGFloat DefaultZoom = 12.0f;
     
     NSArray *markerInfos = @[
         @{
-            @"title": @"Eiffel Tower",
-            @"info": @"A wrought-iron structure erected in Paris in 1889. With a height of 984 feet (300 m), it was the tallest man-made structure for many years.",
-            @"latitude": @48.8584,
-            @"longitude": @2.2946
+            TitleKey: @"Eiffel Tower",
+            InfoKey: @"A wrought-iron structure erected in Paris in 1889. With a height of 984 feet (300 m), it was the tallest man-made structure for many years.",
+            LatitudeKey: @48.8584,
+            LongitudeKey: @2.2946
         },
         @{
-            @"title": @"Centre Georges Pompidou",
-            @"info": @"Centre Georges Pompidou is a complex in the Beaubourg area of the 4th arrondissement of Paris. It was designed in the style of high-tech architecture.",
-            @"latitude": @48.8607,
-            @"longitude": @2.3524
+            TitleKey: @"Centre Georges Pompidou",
+            InfoKey: @"Centre Georges Pompidou is a complex in the Beaubourg area of the 4th arrondissement of Paris. It was designed in the style of high-tech architecture.",
+            LatitudeKey: @48.8607,
+            LongitudeKey: @2.3524
         },
         @{
-            @"title": @"The Louvre",
-            @"info": @"The principal museum and art gallery of France, in Paris.",
-            @"latitude": @48.8609,
-            @"longitude": @2.3363
+            TitleKey: @"The Louvre",
+            InfoKey: @"The principal museum and art gallery of France, in Paris.",
+            LatitudeKey: @48.8609,
+            LongitudeKey: @2.3363
         },
         @{
-            @"title": @"Arc de Triomphe",
-            @"info": @"A ceremonial arch standing at the top of the Champs Élysées in Paris.",
-            @"latitude": @48.8738,
-            @"longitude": @2.2950
+            TitleKey: @"Arc de Triomphe",
+            InfoKey: @"A ceremonial arch standing at the top of the Champs Élysées in Paris.",
+            LatitudeKey: @48.8738,
+            LongitudeKey: @2.2950
         },
         @{
-            @"title": @"Notre Dame",
-            @"info": @"A Gothic cathedral in Paris, dedicated to the Virgin Mary, built between 1163 and 1250.",
-            @"latitude": @48.8530,
-            @"longitude": @2.3498
+            TitleKey: @"Notre Dame",
+            InfoKey: @"A Gothic cathedral in Paris, dedicated to the Virgin Mary, built between 1163 and 1250.",
+            LatitudeKey: @48.8530,
+            LongitudeKey: @2.3498
         }
     ];
     
@@ -109,8 +114,8 @@ static const CGFloat DefaultZoom = 12.0f;
     for (NSDictionary *markerInfo in markerInfos) {
         GMSMarkerOptions *options = [[GMSMarkerOptions alloc] init];
         
-        options.position = CLLocationCoordinate2DMake([markerInfo[@"latitude"] doubleValue], [markerInfo[@"longitude"] doubleValue]);
-        options.title = markerInfo[@"title"];
+        options.position = CLLocationCoordinate2DMake([markerInfo[LatitudeKey] doubleValue], [markerInfo[LongitudeKey] doubleValue]);
+        options.title = markerInfo[TitleKey];
         options.icon = pinImage;
         options.userData = markerInfo;   
         options.infoWindowAnchor = CGPointMake(0.5, 0.25);
@@ -127,8 +132,8 @@ static const CGFloat DefaultZoom = 12.0f;
         id<GMSMarker> marker = self.mapView.selectedMarker;
         NSDictionary *userData = marker.userData;
         
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:userData[@"title"]
-                                                            message:userData[@"info"]
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:userData[TitleKey]
+                                                            message:userData[InfoKey]
                                                            delegate:nil
                                                   cancelButtonTitle:@"OK"
                                                   otherButtonTitles:nil];
