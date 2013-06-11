@@ -71,7 +71,7 @@ static const CGFloat DefaultZoom = 12.0f;
 
 - (void)addMarkersToMap {
     
-    NSArray *markers = @[
+    NSArray *markerInfos = @[
         @{
             @"title": @"Eiffel Tower",
             @"info": @"A wrought-iron structure erected in Paris in 1889. With a height of 984 feet (300 m), it was the tallest man-made structure for many years.",
@@ -106,14 +106,13 @@ static const CGFloat DefaultZoom = 12.0f;
     
     UIImage *pinImage = [UIImage imageNamed:@"Pin"];
     
-    for (NSDictionary *marker in markers) {
+    for (NSDictionary *markerInfo in markerInfos) {
         GMSMarkerOptions *options = [[GMSMarkerOptions alloc] init];
         
-        options.position = CLLocationCoordinate2DMake([marker[@"latitude"] doubleValue], [marker[@"longitude"] doubleValue]);
-        options.title = marker[@"title"];
+        options.position = CLLocationCoordinate2DMake([markerInfo[@"latitude"] doubleValue], [markerInfo[@"longitude"] doubleValue]);
+        options.title = markerInfo[@"title"];
         options.icon = pinImage;
-        options.userData = marker;
-        
+        options.userData = markerInfo;   
         options.infoWindowAnchor = CGPointMake(0.5, 0.25);
         options.groundAnchor = CGPointMake(0.5, 1.0);
         
