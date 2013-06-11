@@ -112,16 +112,16 @@ static const CGFloat DefaultZoom = 12.0f;
     UIImage *pinImage = [UIImage imageNamed:@"Pin"];
     
     for (NSDictionary *markerInfo in markerInfos) {
-        GMSMarkerOptions *options = [[GMSMarkerOptions alloc] init];
+        GMSMarker *marker = [[GMSMarker alloc] init];
         
-        options.position = CLLocationCoordinate2DMake([markerInfo[LatitudeKey] doubleValue], [markerInfo[LongitudeKey] doubleValue]);
-        options.title = markerInfo[TitleKey];
-        options.icon = pinImage;
-        options.userData = markerInfo;   
-        options.infoWindowAnchor = CGPointMake(0.5, 0.25);
-        options.groundAnchor = CGPointMake(0.5, 1.0);
+        marker.position = CLLocationCoordinate2DMake([markerInfo[LatitudeKey] doubleValue], [markerInfo[LongitudeKey] doubleValue]);
+        marker.title = markerInfo[TitleKey];
+        marker.icon = pinImage;
+        marker.userData = markerInfo;   
+        marker.infoWindowAnchor = CGPointMake(0.5, 0.25);
+        marker.groundAnchor = CGPointMake(0.5, 1.0);
         
-        [self.mapView addMarkerWithOptions:options];
+        marker.map = self.mapView;
     }
 }
 
@@ -129,7 +129,7 @@ static const CGFloat DefaultZoom = 12.0f;
 - (void)calloutAccessoryButtonTapped:(id)sender {
     if (self.mapView.selectedMarker) {
         
-        id<GMSMarker> marker = self.mapView.selectedMarker;
+        GMSMarker *marker = self.mapView.selectedMarker;
         NSDictionary *userData = marker.userData;
         
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:userData[TitleKey]
@@ -143,7 +143,7 @@ static const CGFloat DefaultZoom = 12.0f;
 
 #pragma mark - GMSMapViewDelegate
 
-- (UIView *)mapView:(GMSMapView *)mapView markerInfoWindow:(id<GMSMarker>)marker {
+- (UIView *)mapView:(GMSMapView *)mapView markerInfoWindow:(GMSMarker *)marker {
     CLLocationCoordinate2D anchor = marker.position;
     
     CGPoint point = [mapView.projection pointForCoordinate:anchor];
