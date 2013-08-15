@@ -188,4 +188,10 @@ static const CGFloat DefaultZoom = 12.0f;
     self.calloutView.hidden = YES;
 }
 
+- (BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker {
+    /* don't move map camera to center marker on tap */
+    mapView.selectedMarker = marker;
+    return YES;
+}
+
 @end
