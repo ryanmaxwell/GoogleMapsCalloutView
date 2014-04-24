@@ -65,15 +65,6 @@ static const CGFloat DefaultZoom = 12.0f;
     self.emptyCalloutView = nil;
 }
 
-
-- (void)viewWillAppear:(BOOL)animated {
-    [self.mapView startRendering];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [self.mapView stopRendering];
-}
-
 - (void)addMarkersToMap {
     
     NSArray *markerInfos = @[
@@ -161,7 +152,6 @@ static const CGFloat DefaultZoom = 12.0f;
     [self.calloutView presentCalloutFromRect:calloutRect
                                       inView:mapView
                            constrainedToView:mapView
-                    permittedArrowDirections:SMCalloutArrowDirectionDown
                                     animated:YES];
     
     return self.emptyCalloutView;

@@ -1,4 +1,4 @@
-platform :ios, '5.1'
+platform :ios, '6.0'
 
-pod 'Google-Maps-iOS-SDK', '~> 1.4.0'
-pod 'SMCalloutView', '~> 1.1.0'
+pod 'Google-Maps-iOS-SDK', '~> 1.7.0'
+pod 'SMCalloutView', '~> 2.0'
